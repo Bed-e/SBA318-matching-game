@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    title Users and High Scores
+    link(rel="stylesheet" href="/styles.css")
+  body
+    h1 Users and High Scores
+    table
+      thead
+        tr
+          th Username
+          th High Score
+      tbody
+        each user in users
+          tr
+            td= user.username
+            td= user.highScore
+    a(href="/") Back to Home

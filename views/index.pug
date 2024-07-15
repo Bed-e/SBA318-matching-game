@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    title Card Matching Game
+  body
+    h1 Welcome to the Card Matching Game
+    form(action="/users/login" method="POST")
+      label(for="username") Enter your username:
+      input(type="text" name="username" required)
+      button(type="submit") Submit
+    a(href="/users") View Users and High Scores
