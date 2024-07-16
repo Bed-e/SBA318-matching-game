@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title High Scores
+  body
+    h1 High Scores
+    table
+      tr
+        th Username
+        th High Score
+      each user in topUsers
+        tr
+          td #{user.username}
+          td #{user.highScore}
+    a(href="/") Back to Login

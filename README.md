@@ -1,2 +1,4 @@
--game doesn't exist or load
--should add error pages for when weird uri is entered instead of `cannot get` for example
+-should add error pages with try/catch for when weird uri is entered instead of `cannot get` for example
+-high scores don't update into users.js after game
+-add view high scores
+-numbers show on top of card before flip

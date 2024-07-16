@@ -1,8 +1,10 @@
+// middleware/checkAuthentication.js
 const checkAuthentication = (req, res, next) => {
-  if (!req.session.user) {
-    return res.status(401).send("Authentication required");
+  if (req.session.user) {
+    next();
+  } else {
+    res.redirect("/users/login");
   }
-  next();
 };
 
 module.exports = checkAuthentication;

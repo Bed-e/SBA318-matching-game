@@ -1,32 +1,104 @@
+// public/js/game.js
 document.addEventListener("DOMContentLoaded", () => {
   const cards = document.querySelectorAll(".card");
+  let firstCard, secondCard;
+  let lockBoard = false;
   let score = 0;
-  let flippedCards = [];
+  let guesses = 0;
+  const maxGuesses = 12;
+  const username = document.querySelector("h1").dataset.username;
 
-  cards.forEach((card) => {
-    card.addEventListener("click", () => {
-      if (card.classList.contains("hidden")) {
-        card.classList.remove("hidden");
-        flippedCards.push(card);
+  function flipCard() {
+    if (lockBoard) return;
+    if (this === firstCard) return;
 
-        if (flippedCards.length === 2) {
-          const [firstCard, secondCard] = flippedCards;
-          const firstCardValue = `${firstCard.dataset.value}${firstCard.dataset.suit}`;
-          const secondCardValue = `${secondCard.dataset.value}${secondCard.dataset.suit}`;
+    this.classList.add("flipped");
 
-          if (firstCardValue === secondCardValue) {
-            score++;
-            document.querySelector("h2").innerText = `Score: ${score}`;
-            flippedCards = [];
-          } else {
-            setTimeout(() => {
-              firstCard.classList.add("hidden");
-              secondCard.classList.add("hidden");
-              flippedCards = [];
-            }, 1000);
-          }
-        }
+    if (!firstCard) {
+      firstCard = this;
+      return;
+    }
+
+    secondCard = this;
+    checkForMatch();
+  }
+
+  function checkForMatch() {
+    let isMatch = firstCard.dataset.value === secondCard.dataset.value;
+
+    if (isMatch) {
+      disableCards();
+      score++;
+      updateScore();
+    } else {
+      unflipCards();
+    }
+
+    guesses++;
+    updateGuesses();
+    checkForEndGame();
+  }
+
+  function disableCards() {
+    firstCard.removeEventListener("click", flipCard);
+    secondCard.removeEventListener("click", flipCard);
+    resetBoard();
+  }
+
+  function unflipCards() {
+    lockBoard = true;
+
+    setTimeout(() => {
+      firstCard.classList.remove("flipped");
+      secondCard.classList.remove("flipped");
+
+      resetBoard();
+    }, 1500);
+  }
+
+  function resetBoard() {
+    [firstCard, secondCard] = [null, null];
+    lockBoard = false;
+  }
+
+  function updateScore() {
+    document.querySelector("h2").textContent = `Score: ${score}`;
+  }
+
+  function updateGuesses() {
+    document.querySelector("h3").textContent = `Guesses Remaining: ${
+      maxGuesses - guesses
+    }`;
+  }
+
+  function checkForEndGame() {
+    const allCardsMatched = [...cards].every((card) =>
+      card.classList.contains("flipped")
+    );
+
+    if (allCardsMatched || guesses >= maxGuesses) {
+      endGame();
+    }
+  }
+
+  function endGame() {
+    fetch(`/game/${username}/end`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ score }),
+    }).then((response) => {
+      if (response.ok) {
+        window.location.href = `/users/${username}/profile`;
+      } else {
+        alert("Error ending game");
       }
     });
-  });
+  }
+
+  cards.forEach((card) => card.addEventListener("click", flipCard));
+
+  // Initialize the guesses remaining display
+  updateGuesses();
 });

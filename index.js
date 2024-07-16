@@ -1,3 +1,4 @@
+// index.js
 const express = require("express");
 const session = require("express-session");
 const bodyParser = require("body-parser");
@@ -30,7 +31,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // Routes
 app.use("/", indexRoutes);
 app.use("/users", userRoutes);
-app.use("/game", gameRoutes);
+app.use("/game", checkAuthentication, gameRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
