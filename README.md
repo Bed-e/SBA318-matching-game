@@ -1,3 +1,2 @@
--cannot create new users anymore
--cards do not flip
--game doesn't exist
+-game doesn't exist or load
+-should add error pages for when weird uri is entered instead of `cannot get` for example

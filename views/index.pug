@@ -1,17 +1,15 @@
 doctype html
 html
   head
-    title= title
+    title Login
   body
-    h1 Welcome to the Card Game
-    h2= title
-    if error
-      p.error= error
-    form(action='/login', method='post')
-      label(for='username') Username:
-      input(type='text', name='username', required)
+    h1 Login
+    form(action="/login" method="POST")
+      label(for="username") Username:
+      input(type="text" name="username" required)
       br
-      label(for='password') Password:
-      input(type='password', name='password', required)
+      label(for="password") Password:
+      input(type="password" name="password" required)
       br
-      button(type='submit') Login
+      button(type="submit") Login
+    a(href="/users/register") Create New Account

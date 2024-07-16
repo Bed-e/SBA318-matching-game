@@ -18,6 +18,7 @@ html
         font-size: 24px;
         text-align: center;
         background-color: white;
+        cursor: pointer;
       }
       .card.hidden {
         background: repeating-linear-gradient(
@@ -29,11 +30,11 @@ html
         );
       }
   body
-    h1 Welcome, #{user.username}
-    p Your high score: #{user.highScore}
+    h1 Welcome, #{username}
+    p Your high score: #{highScore}
     h2 Score: 0
     .card-grid
       each card in cards
-        .card.hidden(data-suit=card.suit data-value=card.value)= card.state === 'hidden' ? '' : `${card.value}${card.suit}`
+        .card.hidden(data-suit=card.suit data-value=card.value data-id=card.id)= card.state === 'hidden' ? '' : `${card.value}${card.suit}`
     a(href=`/`) Logout
     script(src="/js/game.js")
