@@ -1,0 +1,3 @@
+-cannot create new users anymore
+-cards do not flip
+-game doesn't exist

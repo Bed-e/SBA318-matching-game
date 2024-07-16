@@ -1,13 +1,17 @@
 doctype html
 html
   head
-    title Card Matching Game
+    title= title
   body
-    h1 Welcome to the Card Matching Game
-    form(action="/users/login" method="POST")
-      label(for="username") Enter your username:
-      input(type="text" name="username" required)
-      label(for="password") Enter your password:
-      input(type="password" name="password" required)
-      button(type="submit") Submit
-    a(href="/users") View Users and High Scores
+    h1 Welcome to the Card Game
+    h2= title
+    if error
+      p.error= error
+    form(action='/login', method='post')
+      label(for='username') Username:
+      input(type='text', name='username', required)
+      br
+      label(for='password') Password:
+      input(type='password', name='password', required)
+      br
+      button(type='submit') Login

@@ -2,13 +2,38 @@ doctype html
 html
   head
     title Card Matching Game
-    link(rel="stylesheet" href="/styles.css")
+    style.
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px;
+      }
+      .card {
+        width: 100px;
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid black;
+        font-size: 24px;
+        text-align: center;
+        background-color: white;
+      }
+      .card.hidden {
+        background: repeating-linear-gradient(
+          45deg,
+          #606dbc,
+          #606dbc 10px,
+          #465298 10px,
+          #465298 20px
+        );
+      }
   body
-    h1 Welcome #{user.username}
+    h1 Welcome, #{user.username}
     p Your high score: #{user.highScore}
-    //- Game grid and logic go here
-    form(action=`/game/${user.username}/play` method="POST")
-      label(for="score") Enter your score:
-      input(type="number" name="score" required)
-      button(type="submit") Submit Score
-    a(href="/") Back to Home
+    h2 Score: 0
+    .card-grid
+      each card in cards
+        .card.hidden(data-suit=card.suit data-value=card.value)= card.state === 'hidden' ? '' : `${card.value}${card.suit}`
+    a(href=`/`) Logout
+    script(src="/js/game.js")

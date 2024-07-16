@@ -12,6 +12,23 @@ const isAuthenticated = (req, res, next) => {
   }
 };
 
+// Generate random cards
+const generateCards = () => {
+  const suits = ["s", "c", "d", "h"];
+  const values = Array.from({ length: 9 }, (_, i) =>
+    (i + 2).toString()
+  ).concat(["j", "q", "k", "a"]);
+  const cards = [];
+
+  for (let i = 0; i < 18; i++) {
+    const suit = suits[Math.floor(Math.random() * suits.length)];
+    const value = values[Math.floor(Math.random() * values.length)];
+    cards.push({ suit, value, state: "hidden" });
+  }
+
+  return cards;
+};
+
 // Route to handle game view for a specific user (authentication required)
 router.get("/:username", isAuthenticated, (req, res) => {
   const { username } = req.params;
@@ -21,25 +38,8 @@ router.get("/:username", isAuthenticated, (req, res) => {
     return res.status(404).send("User not found");
   }
 
-  res.render("game", { user });
-});
-
-// Route to handle game logic and update score (authentication required)
-router.post("/:username/play", isAuthenticated, (req, res) => {
-  const { username } = req.params;
-  const { score } = req.body;
-  const user = req.session.user;
-
-  if (user.username !== username) {
-    return res.status(403).send("Forbidden");
-  }
-
-  // Assuming `score` is calculated on the server side based on the game logic
-  if (score > user.highScore) {
-    user.highScore = score;
-  }
-
-  res.redirect(`/game/${username}`);
+  const cards = generateCards();
+  res.render("game", { user, cards });
 });
 
 module.exports = router;
