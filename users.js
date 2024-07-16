@@ -1,4 +1,6 @@
-module.exports = [
-  // Example user data
-  { username: "exampleUser", highScore: 10 },
+const users = [
+  // Example user
+  { username: "john", password: "password123", highScore: 0 },
 ];
+
+module.exports = users;

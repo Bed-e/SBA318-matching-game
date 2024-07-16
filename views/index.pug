@@ -7,5 +7,7 @@ html
     form(action="/users/login" method="POST")
       label(for="username") Enter your username:
       input(type="text" name="username" required)
+      label(for="password") Enter your password:
+      input(type="password" name="password" required)
       button(type="submit") Submit
     a(href="/users") View Users and High Scores

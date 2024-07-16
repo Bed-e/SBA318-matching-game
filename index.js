@@ -1,11 +1,21 @@
 const express = require("express");
 const path = require("path");
+const session = require("express-session");
 const app = express();
 const port = 3000;
 
 // Middleware for parsing JSON and URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Session middleware
+app.use(
+  session({
+    secret: "your-secret-key",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 // Set the view engine to Pug
 app.set("view engine", "pug");
@@ -28,9 +38,9 @@ app.use((err, req, res, next) => {
 });
 
 // Use the routes
-app.use("/", require("./routes/index"));
-app.use("/users", require("./routes/users"));
-app.use("/game", require("./routes/game"));
+app.use("/", require("./routes/index")); // Root route
+app.use("/users", require("./routes/users")); // Users route
+app.use("/game", require("./routes/game")); // Game route
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

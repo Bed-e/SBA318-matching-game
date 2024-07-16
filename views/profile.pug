@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    title User Profile
+  body
+    h1 Welcome, #{user.username}
+    p Your high score: #{user.highScore}
+    h2 Change Password
+    form(action=`/users/${user.username}/change-password` method="POST")
+      label(for="newPassword") New Password:
+      input(type="password" name="newPassword" required)
+      button(type="submit") Change Password
+    a(href=`/game/${user.username}`) Start Game
+    a(href="/") Logout
