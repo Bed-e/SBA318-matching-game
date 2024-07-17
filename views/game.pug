@@ -1,4 +1,3 @@
-// views/game.pug
 doctype html
 html
   head
@@ -16,7 +15,7 @@ html
         align-items: center;
         justify-content: center;
         border: 1px solid black;
-        font-size: 24px;
+        font-size: 36px;
         text-align: center;
         background-color: white;
         cursor: pointer;
@@ -56,6 +55,30 @@ html
       .card-front {
         background-color: white;
         transform: rotateY(180deg);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+      .card-symbol {
+        font-size: 25px;
+      }
+      .top-left {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+      }
+      .bottom-right {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+      }
+      .red {
+        color: red;
+      }
+      .black {
+        color: black;
       }
   body
     h1(data-username=username) Welcome, #{username}
@@ -67,7 +90,25 @@ html
         .card(data-suit=card.suit data-value=card.value data-id=card.id)
           .card-inner
             .card-front
-              span #{card.value}#{card.suit}
+              span(class=card.suit === 'd' || card.suit === 'h' ? 'red' : 'black') #{card.value}
+              span.card-symbol.top-left(class=card.suit === 'd' || card.suit === 'h' ? 'red' : 'black')
+                if card.suit === 'c'
+                  | ♣
+                else if card.suit === 'd'
+                  | ♦
+                else if card.suit === 'h'
+                  | ♥
+                else if card.suit === 's'
+                  | ♠
+              span.card-symbol.bottom-right(class=card.suit === 'd' || card.suit === 'h' ? 'red' : 'black')
+                if card.suit === 'c'
+                  | ♣
+                else if card.suit === 'd'
+                  | ♦
+                else if card.suit === 'h'
+                  | ♥
+                else if card.suit === 's'
+                  | ♠
             .card-back
     a(href=`/`) Logout
     script(src="/js/game.js")

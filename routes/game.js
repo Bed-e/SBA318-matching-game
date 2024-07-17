@@ -10,7 +10,7 @@ router.get("/:username/play", checkAuthentication, (req, res) => {
   const user = users.find((u) => u.username === username);
 
   if (!user) {
-    return res.status(404).send("User not found");
+    return res.status(404).render("error", { message: "User not found" });
   }
 
   // Generate cards
@@ -25,17 +25,16 @@ router.get("/:username/play", checkAuthentication, (req, res) => {
     "8",
     "9",
     "10",
-    "j",
-    "q",
-    "k",
-    "a",
+    "J",
+    "Q",
+    "K",
+    "A",
   ];
   const cards = [];
 
   // Create pairs of matching values with different suits
   const usedValues = [];
   while (cards.length < 18) {
-    // We need 9 pairs (18 cards)
     const value = values[Math.floor(Math.random() * values.length)];
     if (!usedValues.includes(value)) {
       usedValues.push(value);
@@ -85,7 +84,7 @@ router.post("/:username/end", checkAuthentication, (req, res) => {
     }
     res.status(200).send("Game ended");
   } else {
-    res.status(404).send("User not found");
+    res.status(404).render("error", { message: "User not found" });
   }
 });
 

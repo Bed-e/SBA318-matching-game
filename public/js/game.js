@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let lockBoard = false;
   let score = 0;
   let guesses = 0;
-  const maxGuesses = 12;
+  const maxGuesses = 10;
   const username = document.querySelector("h1").dataset.username;
 
   function flipCard() {
@@ -95,6 +95,21 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Error ending game");
       }
     });
+  }
+  function checkForMatch() {
+    let isMatch = firstCard.dataset.value === secondCard.dataset.value;
+
+    if (isMatch) {
+      disableCards();
+      score++;
+      updateScore();
+    } else {
+      unflipCards();
+      guesses++; // Only increment guesses if it's not a match
+    }
+
+    updateGuesses();
+    checkForEndGame();
   }
 
   cards.forEach((card) => card.addEventListener("click", flipCard));
