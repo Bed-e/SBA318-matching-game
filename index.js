@@ -7,7 +7,7 @@ const userRoutes = require("./routes/users");
 const gameRoutes = require("./routes/game");
 const indexRoutes = require("./routes/index");
 const checkAuthentication = require("./middleware/checkAuthentication");
-const errorHandler = require("./middleware/errorHandler"); // Import the error handler middleware
+const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 app.use("/assets", express.static(path.join(__dirname, "assets")));

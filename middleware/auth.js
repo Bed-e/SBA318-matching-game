@@ -1,3 +1,4 @@
+// middleware/auth.js
 const users = require("../users");
 
 const authenticateUser = (req, res, next) => {
@@ -5,7 +6,9 @@ const authenticateUser = (req, res, next) => {
   const user = users.find((u) => u.username === username);
 
   if (!user || user.password !== password) {
-    return res.status(401).send("Authentication failed");
+    const err = new Error("Authentication failed");
+    err.status = 401;
+    return next(err);
   }
 
   req.session.user = user;
